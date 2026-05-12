@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NetScope — Documentation</title>
+  <title>NetScope — Документация</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -54,7 +54,7 @@
       background: var(--surface); border: 1px solid var(--border);
       color: var(--text); text-decoration: none; padding: 10px 18px;
       border-radius: var(--radius); font-size: 0.9rem; font-weight: 600;
-      transition: border-color .2s;
+      transition: border-color .2s; margin-bottom: 8px;
     }
     .github-btn:hover { border-color: var(--accent); }
     .github-btn svg { width: 18px; height: 18px; }
@@ -75,51 +75,51 @@
     NetScope
   </div>
   <nav>
-    <a href="/">Home</a>
-    <a href="/docs.html">Docs</a>
+    <a href="/">Главная</a>
+    <a href="/docs.html">Документация</a>
     <a href="https://github.com/McMaxim/netscope" target="_blank">GitHub</a>
   </nav>
 </header>
 
 <main>
-  <h1>Documentation</h1>
-  <p class="sub">NetScope — a web-based network diagnostics toolkit. Resolve DNS records, scan ports, and inspect HTTP headers — right from your browser.</p>
+  <h1>Документация</h1>
+  <p class="sub">NetScope — веб-инструмент сетевой диагностики. Проверяйте DNS, порты и HTTP-заголовки прямо из браузера, без установки дополнительных программ.</p>
 
   <a class="github-btn" href="https://github.com/McMaxim/netscope" target="_blank">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.185 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.203 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/></svg>
-    View on GitHub
+    Посмотреть на GitHub
   </a>
 
-  <h2>Overview</h2>
-  <p>NetScope exposes common network diagnostic tools through a clean REST API and a browser UI. All operations are executed server-side, so they reflect the network conditions and routing from the server's perspective.</p>
+  <h2>Обзор</h2>
+  <p>NetScope предоставляет стандартные инструменты сетевой диагностики через удобный веб-интерфейс и REST API. Все операции выполняются на стороне сервера — результаты отражают реальное состояние сети с точки зрения сервера.</p>
 
   <div class="feature-grid">
     <div class="feature">
-      <h3>🔍 DNS Lookup</h3>
-      <p>Resolves A, AAAA, MX, NS, and TXT records for any domain.</p>
+      <h3>🔍 DNS-запрос</h3>
+      <p>Получение записей A, AAAA, MX, NS и TXT для любого домена.</p>
     </div>
     <div class="feature">
-      <h3>🔌 Port Scanner</h3>
-      <p>TCP connect scan on a custom list of ports (max 20). Checks 21, 22, 80, 443, 3306, 5432 and more by default.</p>
+      <h3>🔌 Сканер портов</h3>
+      <p>TCP-подключение к заданным портам (до 20 штук). По умолчанию проверяет 21, 22, 80, 443, 3306, 5432 и другие.</p>
     </div>
     <div class="feature">
-      <h3>📋 HTTP Headers</h3>
-      <p>Fetches response headers from any URL, following redirects, showing final URL and status code.</p>
+      <h3>📋 HTTP-заголовки</h3>
+      <p>Получение заголовков ответа любого URL с поддержкой редиректов. Показывает итоговый URL и код статуса.</p>
     </div>
   </div>
 
-  <h2>API Reference</h2>
-  <p>All endpoints accept <code>POST</code> with a JSON body and return JSON. Base URL: <code>/api</code></p>
+  <h2>Справочник API</h2>
+  <p>Все эндпоинты принимают <code>POST</code>-запрос с JSON-телом и возвращают JSON. Базовый URL: <code>/api</code></p>
 
   <div class="endpoint">
     <div class="endpoint-header">
       <span class="method">POST</span>
       <span class="path">/api/dns</span>
-      <span class="badge badge-green">public</span>
+      <span class="badge badge-green">публичный</span>
     </div>
     <div class="endpoint-body">
-      Body: <code>{"host": "github.com"}</code><br/>
-      Returns: <code>{"host", "records": {"A": [...], "MX": [...], ...}}</code>
+      Тело: <code>{"host": "github.com"}</code><br/>
+      Ответ: <code>{"host", "records": {"A": [...], "MX": [...], ...}}</code>
     </div>
   </div>
 
@@ -127,11 +127,11 @@
     <div class="endpoint-header">
       <span class="method">POST</span>
       <span class="path">/api/ports</span>
-      <span class="badge badge-green">public</span>
+      <span class="badge badge-green">публичный</span>
     </div>
     <div class="endpoint-body">
-      Body: <code>{"host": "1.1.1.1", "ports": [80, 443, 22]}</code> (max 20 ports)<br/>
-      Returns: <code>{"host", "results": [{"port": 80, "open": true}, ...]}</code>
+      Тело: <code>{"host": "1.1.1.1", "ports": [80, 443, 22]}</code> (максимум 20 портов)<br/>
+      Ответ: <code>{"host", "results": [{"port": 80, "open": true}, ...]}</code>
     </div>
   </div>
 
@@ -139,11 +139,11 @@
     <div class="endpoint-header">
       <span class="method">POST</span>
       <span class="path">/api/headers</span>
-      <span class="badge badge-green">public</span>
+      <span class="badge badge-green">публичный</span>
     </div>
     <div class="endpoint-body">
-      Body: <code>{"url": "https://example.com"}</code><br/>
-      Returns: <code>{"url", "status": 200, "headers": {...}}</code>
+      Тело: <code>{"url": "https://example.com"}</code><br/>
+      Ответ: <code>{"url", "status": 200, "headers": {...}}</code>
     </div>
   </div>
 
@@ -153,37 +153,35 @@
       <span class="path">/api/health</span>
       <span class="badge badge-blue">healthcheck</span>
     </div>
-    <div class="endpoint-body">Returns: <code>{"status": "ok"}</code></div>
+    <div class="endpoint-body">Ответ: <code>{"status": "ok"}</code></div>
   </div>
 
-  <h2>Self-Hosting</h2>
-  <p>NetScope is fully Dockerized. You need Docker, Docker Compose, and a domain pointing to your server.</p>
+  <h2>Самостоятельный деплой</h2>
+  <p>NetScope полностью контейнеризован. Для запуска нужны Docker и Docker Compose.</p>
 
   <pre>git clone https://github.com/McMaxim/netscope.git
 cd netscope
 
-# Edit Caddyfile — replace yourdomain.com with your domain
+# Укажи свой домен в Caddyfile
 nano Caddyfile
 
 docker compose up -d</pre>
 
-  <p>Caddy handles TLS certificates automatically via Let's Encrypt. No extra configuration needed.</p>
+  <p>Caddy автоматически получит SSL-сертификат через Let's Encrypt. Дополнительная настройка не требуется.</p>
 
-  <h2>Architecture</h2>
-  <pre>Browser
-  └─▶ Caddy (HTTPS :443)
-        ├─▶ /api/* ──▶ FastAPI (uvicorn :8000)
-        └─▶ /*    ──▶ Static files (frontend/)</pre>
+  <h2>Архитектура</h2>
+  <pre>Браузер
+  └─▶ Caddy (HTTPS :443, авто-TLS)
+        ├─▶ /api/* ──▶ FastAPI бэкенд (:8000)
+        └─▶ /*     ──▶ Статические файлы фронтенда</pre>
 
-  <p>All network operations run inside the backend container. Ping and traceroute use <code>NET_RAW</code> capabilities. Port scan uses async TCP connect with a 2s timeout per port.</p>
-
-  <h2>Security Notes</h2>
-  <p>Host input is validated with <code>/^[a-zA-Z0-9.\-_]+$/</code> to prevent shell injection. All subprocess calls use <code>exec</code> form (no shell). Port scan is limited to 20 ports per request. Timeouts are enforced on every operation.</p>
+  <h2>Безопасность</h2>
+  <p>Входные данные (хост) проверяются регулярным выражением <code>/^[a-zA-Z0-9.\-_]+$/</code> для защиты от инъекций. Все системные вызовы используют форму <code>exec</code> без оболочки. Сканирование портов ограничено 20 портами за запрос. На каждую операцию установлен таймаут.</p>
 </main>
 
 <footer>
-  NetScope &mdash; open source &nbsp;|&nbsp;
-  <a href="/">App</a> &nbsp;|&nbsp;
+  NetScope &mdash; открытый код &nbsp;|&nbsp;
+  <a href="/">Приложение</a> &nbsp;|&nbsp;
   <a href="https://github.com/McMaxim/netscope" target="_blank">GitHub</a>
 </footer>
 

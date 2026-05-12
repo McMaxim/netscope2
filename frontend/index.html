@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NetScope — Network Diagnostics</title>
+  <title>NetScope — Сетевая диагностика</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -181,47 +181,47 @@
     NetScope
   </div>
   <nav>
-    <a href="/">Home</a>
-    <a href="/docs.html">Docs</a>
+    <a href="/">Главная</a>
+    <a href="/docs.html">Документация</a>
     <a href="https://github.com/McMaxim/netscope" target="_blank">GitHub</a>
   </nav>
 </header>
 
 <main>
-  <h1>Network Diagnostics</h1>
-  <p class="subtitle">Inspect DNS records, open ports, and HTTP headers — right from your browser.</p>
+  <h1>Сетевая диагностика</h1>
+  <p class="subtitle">Проверяйте DNS-записи, открытые порты и HTTP-заголовки прямо из браузера.</p>
 
   <div class="tools-grid">
 
     <!-- DNS -->
     <div class="tool-card">
-      <h2>🔍 DNS Lookup</h2>
-      <p>Resolve A, AAAA, MX, NS, TXT records</p>
+      <h2>🔍 DNS-запрос</h2>
+      <p>Получить A, AAAA, MX, NS, TXT-записи домена</p>
       <div class="input-row">
-        <input type="text" id="dns-host" placeholder="e.g. github.com" />
-        <button onclick="runDns()">Lookup</button>
+        <input type="text" id="dns-host" placeholder="например: github.com" />
+        <button onclick="runDns()">Запрос</button>
       </div>
       <div class="result" id="dns-result"></div>
     </div>
 
     <!-- PORT SCAN -->
     <div class="tool-card">
-      <h2>🔌 Port Scanner</h2>
-      <p>Check common ports: 22, 80, 443, 3306, 5432…</p>
+      <h2>🔌 Сканер портов</h2>
+      <p>Проверить стандартные порты: 21, 22, 80, 443, 3306, 5432…</p>
       <div class="input-row">
-        <input type="text" id="port-host" placeholder="e.g. 1.1.1.1" />
-        <button onclick="runPorts()">Scan</button>
+        <input type="text" id="port-host" placeholder="например: 1.1.1.1" />
+        <button onclick="runPorts()">Сканировать</button>
       </div>
       <div class="result" id="port-result"></div>
     </div>
 
     <!-- HTTP HEADERS -->
     <div class="tool-card">
-      <h2>📋 HTTP Headers</h2>
-      <p>Inspect server response headers of any URL</p>
+      <h2>📋 HTTP-заголовки</h2>
+      <p>Просмотреть заголовки ответа любого сайта</p>
       <div class="input-row">
-        <input type="text" id="http-url" placeholder="e.g. https://example.com" />
-        <button onclick="runHeaders()">Fetch</button>
+        <input type="text" id="http-url" placeholder="например: https://example.com" />
+        <button onclick="runHeaders()">Получить</button>
       </div>
       <div class="result" id="http-result"></div>
     </div>
@@ -230,8 +230,8 @@
 </main>
 
 <footer>
-  NetScope &mdash; open source network diagnostics &nbsp;|&nbsp;
-  <a href="/docs.html">Documentation</a> &nbsp;|&nbsp;
+  NetScope &mdash; сетевая диагностика с открытым кодом &nbsp;|&nbsp;
+  <a href="/docs.html">Документация</a> &nbsp;|&nbsp;
   <a href="https://github.com/McMaxim/netscope" target="_blank">GitHub</a>
 </footer>
 
@@ -241,7 +241,7 @@
   function spin(id) {
     const el = document.getElementById(id);
     el.className = 'result visible';
-    el.innerHTML = '<span class="spinner"></span> Running…';
+    el.innerHTML = '<span class="spinner"></span> Выполняется…';
   }
 
   function show(id, html) {
@@ -279,8 +279,8 @@
         out += `<span class="key">${type}</span>\n`;
         vals.forEach(v => { out += `  ${esc(v)}\n`; });
       }
-      show('dns-result', out || '<span class="err">No records found</span>');
-    } catch(e) { show('dns-result', `<span class="err">Error: ${esc(e.message)}</span>`); }
+      show('dns-result', out || '<span class="err">Записи не найдены</span>');
+    } catch(e) { show('dns-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`); }
   }
 
   async function runPorts() {
@@ -291,11 +291,11 @@
       const d = await post('/ports', {host});
       const lines = d.results.map(r =>
         r.open
-          ? `<span class="ok">  OPEN   ${r.port}</span>`
-          : `<span class="err">  CLOSED ${r.port}</span>`
+          ? `<span class="ok">  ОТКРЫТ  ${r.port}</span>`
+          : `<span class="err">  ЗАКРЫТ  ${r.port}</span>`
       ).join('\n');
       show('port-result', `<span class="key">${esc(host)}</span>\n` + lines);
-    } catch(e) { show('port-result', `<span class="err">Error: ${esc(e.message)}</span>`); }
+    } catch(e) { show('port-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`); }
   }
 
   async function runHeaders() {
@@ -309,10 +309,9 @@
         out += `<span class="key">${esc(k)}</span>: ${esc(v)}\n`;
       }
       show('http-result', out);
-    } catch(e) { show('http-result', `<span class="err">Error: ${esc(e.message)}</span>`); }
+    } catch(e) { show('http-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`); }
   }
 
-  // Enter key support
   document.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
     const id = document.activeElement?.id;
