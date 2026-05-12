@@ -27,7 +27,7 @@ Web-based network diagnostics toolkit. Run Ping, DNS lookup, Port scan, HTTP hea
 Requirements: Docker, Docker Compose, a domain pointing to your server.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/netscope.git
+git clone https://github.com/McMaxim/netscope.git
 cd netscope
 
 # Set your domain
