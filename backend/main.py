@@ -122,6 +122,10 @@ class SslRequest(BaseModel):
     proxy: Literal["direct", "de"] = "direct"
 
 
+class ProxyRequest(BaseModel):
+    proxy: Literal["direct", "de"] = "direct"
+
+
 def sanitize_host(host: str) -> str:
     host = host.strip()
     if not re.match(r'^[a-zA-Z0-9.\-_]+$', host):
@@ -137,6 +141,17 @@ _scan_sem = asyncio.Semaphore(50)
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
+
+
+@app.post("/api/myip")
+async def my_ip(req: ProxyRequest):
+    proxy_url = PROXY_MAP.get(req.proxy)
+    try:
+        async with httpx.AsyncClient(proxy=proxy_url, timeout=10) as client:
+            resp = await client.get("https://api.ipify.org?format=json")
+            return resp.json()
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=str(e))
 
 
 @app.get("/docs.html")

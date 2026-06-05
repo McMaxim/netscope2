@@ -28,87 +28,119 @@
       flex-direction: column;
     }
 
+    /* ── Header ── */
     header {
-      padding: 20px 32px;
+      padding: 14px 32px;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
     }
 
     .logo {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--accent);
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .logo svg { width: 28px; height: 28px; }
+    .logo svg { width: 24px; height: 24px; }
 
+    nav { display: flex; align-items: center; gap: 4px; }
     nav a {
       color: var(--muted);
       text-decoration: none;
-      margin-left: 20px;
-      font-size: 0.9rem;
+      margin-left: 16px;
+      font-size: 0.85rem;
       transition: color .2s;
     }
     nav a:hover { color: var(--text); }
 
-    main {
-      max-width: 960px;
-      width: 100%;
-      margin: 40px auto;
-      padding: 0 20px;
-      flex: 1;
-    }
-
-    h1 { font-size: 2rem; margin-bottom: 8px; }
-    .subtitle { color: var(--muted); margin-bottom: 24px; }
-
-    /* ── Proxy bar ── */
+    /* ── Proxy bar (sticky, in header area) ── */
     .proxy-bar {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 4px 6px 4px 12px;
     }
-    .proxy-bar span {
-      font-size: 0.85rem;
+    .proxy-bar-label {
+      font-size: 0.78rem;
       color: var(--muted);
-      margin-right: 4px;
+      white-space: nowrap;
     }
     .proxy-btn {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 14px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: var(--surface);
-      color: var(--muted);
+      padding: 5px 14px;
+      border-radius: 18px;
       font-size: 0.82rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
-      transition: all .2s;
+      transition: all .15s;
       user-select: none;
+      color: var(--muted);
+      border: 1px solid transparent;
     }
     .proxy-btn input[type=radio] { display: none; }
     .proxy-btn .dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--border);
-      transition: background .2s;
+      flex-shrink: 0;
     }
+    .proxy-btn:hover { color: var(--text); }
     .proxy-btn.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(88,166,255,.08);
+      background: var(--accent);
+      color: #0d1117;
     }
-    .proxy-btn.active .dot { background: var(--accent); }
+    .proxy-btn.active .dot { background: #0d1117; }
+
+    /* IP check pill */
+    .ip-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+      margin-left: 4px;
+    }
+    .ip-pill:hover { border-color: var(--accent); color: var(--accent); opacity: 1; }
+    .ip-pill.loading { opacity: 0.5; }
+    #ip-display {
+      font-weight: 600;
+      color: var(--accent2);
+      font-family: monospace;
+      font-size: 0.8rem;
+    }
+
+    /* ── Main ── */
+    main {
+      max-width: 960px;
+      width: 100%;
+      margin: 32px auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    h1 { font-size: 1.8rem; margin-bottom: 6px; }
+    .subtitle { color: var(--muted); margin-bottom: 28px; font-size: 0.9rem; }
 
     /* ── Grid ── */
     .tools-grid {
@@ -136,10 +168,7 @@
     }
     .tool-card p { font-size: 0.82rem; color: var(--muted); margin-top: -6px; }
 
-    .input-row {
-      display: flex;
-      gap: 8px;
-    }
+    .input-row { display: flex; gap: 8px; }
 
     input[type=text] {
       flex: 1;
@@ -187,10 +216,7 @@
       list-style: none;
     }
     .port-opts summary::-webkit-details-marker { display: none; }
-    .port-opts summary::after {
-      content: '▸';
-      transition: transform .2s;
-    }
+    .port-opts summary::after { content: '▸'; transition: transform .2s; }
     .port-opts[open] summary::after { transform: rotate(90deg); }
     .port-opts summary:hover { color: var(--text); }
 
@@ -201,11 +227,7 @@
       flex-direction: column;
       gap: 10px;
     }
-    .port-cats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
+    .port-cats { display: flex; flex-wrap: wrap; gap: 6px; }
     .cat-chip {
       display: flex;
       align-items: center;
@@ -220,16 +242,8 @@
       color: var(--muted);
     }
     .cat-chip input[type=checkbox] { display: none; }
-    .cat-chip.on {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(88,166,255,.08);
-    }
-    .port-quick {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
+    .cat-chip.on { border-color: var(--accent); color: var(--accent); background: rgba(88,166,255,.08); }
+    .port-quick { display: flex; gap: 6px; flex-wrap: wrap; }
     .port-quick button {
       background: transparent;
       border: 1px solid var(--border);
@@ -240,20 +254,9 @@
       border-radius: 4px;
     }
     .port-quick button:hover { border-color: var(--muted); color: var(--text); opacity: 1; }
-    .port-custom-row {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .port-custom-row span {
-      font-size: 0.78rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    #port-custom {
-      font-size: 0.78rem;
-      padding: 5px 8px;
-    }
+    .port-custom-row { display: flex; gap: 6px; align-items: center; }
+    .port-custom-row span { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+    #port-custom { font-size: 0.78rem; padding: 5px 8px; }
 
     /* ── Results ── */
     .result {
@@ -275,6 +278,15 @@
     .result .err { color: var(--warn); }
     .result .key { color: var(--accent); }
     .result .dim { color: var(--muted); }
+    .result .tag {
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 8px;
+      background: rgba(88,166,255,.15);
+      color: var(--accent);
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: 600;
+    }
 
     .spinner {
       display: inline-block;
@@ -290,7 +302,7 @@
 
     footer {
       text-align: center;
-      padding: 24px;
+      padding: 20px;
       color: var(--muted);
       font-size: 0.8rem;
       border-top: 1px solid var(--border);
@@ -309,6 +321,23 @@
     </svg>
     NetScope
   </div>
+
+  <!-- Proxy selector — always visible in header -->
+  <div class="proxy-bar">
+    <span class="proxy-bar-label">Исходящий:</span>
+    <label class="proxy-btn active" id="btn-direct">
+      <input type="radio" name="proxy" value="direct" checked onchange="setProxy('direct')">
+      <span class="dot"></span> RU
+    </label>
+    <label class="proxy-btn" id="btn-de">
+      <input type="radio" name="proxy" value="de" onchange="setProxy('de')">
+      <span class="dot"></span> DE
+    </label>
+    <button class="ip-pill" id="ip-pill" onclick="checkIp()">
+      IP: <span id="ip-display">?</span>
+    </button>
+  </div>
+
   <nav>
     <a href="/">Главная</a>
     <a href="/docs.html">Документация</a>
@@ -319,19 +348,6 @@
 <main>
   <h1>Сетевая диагностика</h1>
   <p class="subtitle">DNS, открытые порты, HTTP-заголовки и SSL-сертификаты.</p>
-
-  <!-- Proxy selector -->
-  <div class="proxy-bar">
-    <span>Исходящий трафик:</span>
-    <label class="proxy-btn active" id="btn-direct">
-      <input type="radio" name="proxy" value="direct" checked onchange="setProxy('direct')">
-      <span class="dot"></span> RU — прямое
-    </label>
-    <label class="proxy-btn" id="btn-de">
-      <input type="radio" name="proxy" value="de" onchange="setProxy('de')">
-      <span class="dot"></span> DE — прокси
-    </label>
-  </div>
 
   <div class="tools-grid">
 
@@ -358,12 +374,12 @@
       <p>Проверить открытые порты на хосте</p>
       <div class="input-row">
         <input type="text" id="port-host" placeholder="например: 1.1.1.1" />
-        <button id="port-btn" onclick="runPorts()">Сканировать</button>
+        <button onclick="runPorts()">Сканировать</button>
       </div>
 
-      <details class="port-opts" id="port-opts">
+      <details class="port-opts">
         <summary>
-          <span>Порты: <span id="port-count">все (78)</span></span>
+          <span>Порты: <span id="port-count">84 шт.</span></span>
         </summary>
         <div class="port-opts-body">
           <div class="port-cats" id="port-cats"></div>
@@ -453,8 +469,7 @@
 
   function toggleCat(cat, checked) {
     catState[cat] = checked;
-    const chip = document.querySelector(`.cat-chip[data-cat="${cat}"]`);
-    chip.classList.toggle('on', checked);
+    document.querySelector(`.cat-chip[data-cat="${cat}"]`).classList.toggle('on', checked);
     updatePortCount();
   }
 
@@ -473,32 +488,58 @@
     Object.entries(catState).forEach(([cat, on]) => {
       if (on) CATS[cat].forEach(p => set.add(p));
     });
-    const custom = document.getElementById('port-custom').value;
-    custom.split(/[\s,;]+/).forEach(s => {
-      const n = parseInt(s.trim());
-      if (n > 0 && n <= 65535) set.add(n);
-    });
+    document.getElementById('port-custom').value
+      .split(/[\s,;]+/)
+      .forEach(s => { const n = parseInt(s); if (n > 0 && n <= 65535) set.add(n); });
     return [...set].sort((a, b) => a - b);
   }
 
   function updatePortCount() {
-    const ports = getSelectedPorts();
-    document.getElementById('port-count').textContent =
-      ports.length === 0 ? 'нет' : `${ports.length} шт.`;
+    const n = getSelectedPorts().length;
+    document.getElementById('port-count').textContent = n === 0 ? 'нет' : `${n} шт.`;
   }
 
   document.getElementById('port-custom').addEventListener('input', updatePortCount);
-
   buildCatChips();
 
-  // ── Proxy selector ──────────────────────────────
+  // ── Proxy ────────────────────────────────────────
   function setProxy(val) {
     currentProxy = val;
     document.querySelectorAll('.proxy-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('btn-' + val).classList.add('active');
+    // Reset IP display when proxy changes
+    document.getElementById('ip-display').textContent = '?';
   }
 
+  async function checkIp() {
+    const pill = document.getElementById('ip-pill');
+    const display = document.getElementById('ip-display');
+    pill.classList.add('loading');
+    display.textContent = '…';
+    try {
+      const r = await fetch(API + '/myip', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({proxy: currentProxy}),
+      });
+      const d = await r.json();
+      display.textContent = d.ip || '??';
+    } catch(e) {
+      display.textContent = 'err';
+    }
+    pill.classList.remove('loading');
+  }
+
+  // Auto-check IP on load
+  checkIp();
+
   // ── Helpers ──────────────────────────────────────
+  function proxyTag() {
+    return currentProxy === 'de'
+      ? ' <span class="tag">DE</span>'
+      : ' <span class="tag" style="background:rgba(63,185,80,.15);color:var(--accent2)">RU</span>';
+  }
+
   function spin(id) {
     const el = document.getElementById(id);
     el.className = 'result visible';
@@ -535,7 +576,7 @@
     spin('dns-result');
     try {
       const d = await post('/dns', {host});
-      let out = '';
+      let out = proxyTag() + '\n';
       for (const [type, vals] of Object.entries(d.records)) {
         if (!vals.length) continue;
         out += `<span class="key">${type}</span>\n`;
@@ -552,24 +593,21 @@
     const host = document.getElementById('port-host').value.trim();
     if (!host) return;
     const ports = getSelectedPorts();
-    if (!ports.length) {
-      show('port-result', '<span class="err">Нет выбранных портов</span>');
-      return;
-    }
+    if (!ports.length) { show('port-result', '<span class="err">Нет выбранных портов</span>'); return; }
     spin('port-result');
     try {
       const d = await post('/ports', {host, ports});
       const open   = d.results.filter(r => r.open);
       const closed = d.results.filter(r => !r.open);
-      let out = `<span class="key">${esc(host)}</span>  <span class="dim">(${d.results.length} проверено)</span>\n\n`;
+      let out = `<span class="key">${esc(host)}</span>  <span class="dim">${d.results.length} проверено</span>  ${proxyTag()}\n\n`;
       if (open.length) {
-        out += `<span class="ok">Открытые порты (${open.length}):</span>\n`;
-        open.forEach(r => { out += `  <span class="ok">  ${r.port}</span>\n`; });
+        out += `<span class="ok">Открытые (${open.length}):</span>\n`;
+        open.forEach(r => { out += `  <span class="ok">${r.port}</span>\n`; });
         if (closed.length) out += '\n';
       }
       if (closed.length) {
         out += `<span class="dim">Закрытые (${closed.length}):</span>\n`;
-        closed.forEach(r => { out += `  <span class="dim">  ${r.port}</span>\n`; });
+        closed.forEach(r => { out += `  <span class="dim">${r.port}</span>\n`; });
       }
       show('port-result', out);
     } catch(e) {
@@ -584,7 +622,7 @@
     spin('http-result');
     try {
       const d = await post('/headers', {url});
-      let out = `<span class="ok">HTTP ${d.status}</span>  <span class="key">${esc(d.url)}</span>\n\n`;
+      let out = `<span class="ok">HTTP ${d.status}</span>  <span class="key">${esc(d.url)}</span>  ${proxyTag()}\n\n`;
       for (const [k, v] of Object.entries(d.headers)) {
         out += `<span class="key">${esc(k)}</span>: ${esc(v)}\n`;
       }
@@ -603,26 +641,21 @@
       const d = await post('/ssl', {host, port: 443});
       const validLabel = d.is_valid
         ? `<span class="ok">ДЕЙСТВИТЕЛЕН</span>`
-        : `<span class="err">ПРОСРОЧЕН / НЕДЕЙСТВИТЕЛЕН</span>`;
+        : `<span class="err">ПРОСРОЧЕН</span>`;
 
-      let out = `<span class="key">${esc(d.host)}:${d.port}</span>  ${validLabel}\n\n`;
-
-      out += `<span class="key">Субъект (CN)</span>: ${esc(d.subject.cn || '—')}\n`;
-      if (d.subject.o) out += `<span class="key">Организация </span>: ${esc(d.subject.o)}\n`;
+      let out = `<span class="key">${esc(d.host)}:${d.port}</span>  ${validLabel}  ${proxyTag()}\n\n`;
+      out += `<span class="key">Субъект (CN) </span>: ${esc(d.subject.cn || '—')}\n`;
+      if (d.subject.o) out += `<span class="key">Организация  </span>: ${esc(d.subject.o)}\n`;
       out += `\n<span class="key">Издатель (CN)</span>: ${esc(d.issuer.cn || '—')}\n`;
       if (d.issuer.o)  out += `<span class="key">Издатель (O) </span>: ${esc(d.issuer.o)}\n`;
-
-      out += `\n<span class="key">Действителен с</span>: ${esc(fmtDate(d.valid_from))}\n`;
-      out += `<span class="key">Действителен по</span>: ${esc(fmtDate(d.valid_to))}\n`;
-
+      out += `\n<span class="key">С  </span>: ${esc(fmtDate(d.valid_from))}\n`;
+      out += `<span class="key">По </span>: ${esc(fmtDate(d.valid_to))}\n`;
       if (d.sans.length) {
         out += `\n<span class="key">SANs (${d.sans.length}):</span>\n`;
-        d.sans.slice(0, 10).forEach(s => { out += `  ${esc(s)}\n`; });
-        if (d.sans.length > 10) out += `  <span class="dim">... и ещё ${d.sans.length - 10}</span>\n`;
+        d.sans.slice(0, 8).forEach(s => { out += `  ${esc(s)}\n`; });
+        if (d.sans.length > 8) out += `  <span class="dim">... +${d.sans.length - 8}</span>\n`;
       }
-
       out += `\n<span class="key">SHA-256</span>: <span class="dim">${esc(d.fingerprint_sha256)}</span>`;
-
       show('ssl-result', out);
     } catch(e) {
       show('ssl-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`);
@@ -633,13 +666,13 @@
     if (!iso) return '—';
     try {
       return new Date(iso).toLocaleString('ru-RU', {
-        year: 'numeric', month: '2-digit', day: '2-digit',
-        hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+        year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', timeZoneName:'short'
       });
     } catch { return iso; }
   }
 
-  // ── Enter key ─────────────────────────────────────
+  // ── Enter ─────────────────────────────────────────
   document.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
     const id = document.activeElement?.id;
