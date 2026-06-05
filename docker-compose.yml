@@ -1,9 +1,7 @@
 services:
   backend:
-    build: ./backend
+    build: .          # root Dockerfile: backend + frontend + xray
     restart: unless-stopped
-    cap_add:
-      - NET_RAW        # needed for ping / traceroute
     networks:
       - internal
 
@@ -16,7 +14,6 @@ services:
       - "443:443/udp"   # HTTP/3
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - ./frontend:/srv/frontend:ro
       - caddy_data:/data
       - caddy_config:/config
     depends_on:

@@ -1,13 +1,6 @@
-yourdomain.com {
-    # Proxy API requests to backend
-    handle /api/* {
-        reverse_proxy backend:8000
-    }
+# Замените yourdomain.com на ваш домен (например netscope.ru)
+# Caddy автоматически получит TLS-сертификат Let's Encrypt
 
-    # Serve static frontend files
-    handle {
-        root * /srv/frontend
-        file_server
-        try_files {path} /index.html
-    }
+yourdomain.com {
+    reverse_proxy backend:8000
 }

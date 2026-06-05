@@ -1,0 +1,56 @@
+{
+  "log": {"loglevel": "warning"},
+  "inbounds": [
+    {
+      "tag": "socks-in",
+      "port": 10808,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": false,
+        "auth": "noauth"
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "vless-de",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "148.253.210.98",
+            "port": 443,
+            "users": [
+              {
+                "id": "f0273a77-5227-4277-a0bd-a26ab2104f3e",
+                "encryption": "none",
+                "flow": ""
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "fingerprint": "chrome",
+          "serverName": "google.com",
+          "publicKey": "sy5sIt-gYslpuM60DIewHOvL3Yvba3fCji2G-PJLYGI",
+          "shortId": "5e0369d33b",
+          "spiderX": "/"
+        }
+      }
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": ["socks-in"],
+        "outboundTag": "vless-de"
+      }
+    ]
+  }
+}

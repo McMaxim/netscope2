@@ -46,7 +46,6 @@
       align-items: center;
       gap: 10px;
     }
-
     .logo svg { width: 28px; height: 28px; }
 
     nav a {
@@ -59,7 +58,7 @@
     nav a:hover { color: var(--text); }
 
     main {
-      max-width: 900px;
+      max-width: 960px;
       width: 100%;
       margin: 40px auto;
       padding: 0 20px;
@@ -67,8 +66,51 @@
     }
 
     h1 { font-size: 2rem; margin-bottom: 8px; }
-    .subtitle { color: var(--muted); margin-bottom: 36px; }
+    .subtitle { color: var(--muted); margin-bottom: 24px; }
 
+    /* ── Proxy bar ── */
+    .proxy-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .proxy-bar span {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-right: 4px;
+    }
+    .proxy-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+      user-select: none;
+    }
+    .proxy-btn input[type=radio] { display: none; }
+    .proxy-btn .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background .2s;
+    }
+    .proxy-btn.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(88,166,255,.08);
+    }
+    .proxy-btn.active .dot { background: var(--accent); }
+
+    /* ── Grid ── */
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -92,7 +134,6 @@
       gap: 8px;
       color: var(--accent);
     }
-
     .tool-card p { font-size: 0.82rem; color: var(--muted); margin-top: -6px; }
 
     .input-row {
@@ -128,6 +169,93 @@
     button:hover { opacity: 0.85; }
     button:disabled { opacity: 0.4; cursor: default; }
 
+    /* ── Port options ── */
+    .port-opts {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .port-opts summary {
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+    }
+    .port-opts summary::-webkit-details-marker { display: none; }
+    .port-opts summary::after {
+      content: '▸';
+      transition: transform .2s;
+    }
+    .port-opts[open] summary::after { transform: rotate(90deg); }
+    .port-opts summary:hover { color: var(--text); }
+
+    .port-opts-body {
+      padding: 10px 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .port-cats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .cat-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all .15s;
+      user-select: none;
+      color: var(--muted);
+    }
+    .cat-chip input[type=checkbox] { display: none; }
+    .cat-chip.on {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(88,166,255,.08);
+    }
+    .port-quick {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .port-quick button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 3px 10px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      border-radius: 4px;
+    }
+    .port-quick button:hover { border-color: var(--muted); color: var(--text); opacity: 1; }
+    .port-custom-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .port-custom-row span {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    #port-custom {
+      font-size: 0.78rem;
+      padding: 5px 8px;
+    }
+
+    /* ── Results ── */
     .result {
       background: var(--bg);
       border: 1px solid var(--border);
@@ -137,15 +265,16 @@
       font-family: 'Courier New', monospace;
       white-space: pre-wrap;
       word-break: break-all;
-      max-height: 280px;
+      max-height: 300px;
       overflow-y: auto;
       display: none;
       line-height: 1.6;
     }
     .result.visible { display: block; }
-    .result .ok { color: var(--accent2); }
+    .result .ok  { color: var(--accent2); }
     .result .err { color: var(--warn); }
     .result .key { color: var(--accent); }
+    .result .dim { color: var(--muted); }
 
     .spinner {
       display: inline-block;
@@ -189,14 +318,30 @@
 
 <main>
   <h1>Сетевая диагностика</h1>
-  <p class="subtitle">Проверяйте DNS-записи, открытые порты и HTTP-заголовки прямо из браузера.</p>
+  <p class="subtitle">DNS, открытые порты, HTTP-заголовки и SSL-сертификаты.</p>
+
+  <!-- Proxy selector -->
+  <div class="proxy-bar">
+    <span>Исходящий трафик:</span>
+    <label class="proxy-btn active" id="btn-direct">
+      <input type="radio" name="proxy" value="direct" checked onchange="setProxy('direct')">
+      <span class="dot"></span> RU — прямое
+    </label>
+    <label class="proxy-btn" id="btn-de">
+      <input type="radio" name="proxy" value="de" onchange="setProxy('de')">
+      <span class="dot"></span> DE — прокси
+    </label>
+  </div>
 
   <div class="tools-grid">
 
     <!-- DNS -->
     <div class="tool-card">
-      <h2>DNS-запрос</h2>
-      <p>Получить A, AAAA, MX, NS, TXT-записи домена</p>
+      <h2>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        DNS-запрос
+      </h2>
+      <p>A, AAAA, MX, NS, TXT-записи домена</p>
       <div class="input-row">
         <input type="text" id="dns-host" placeholder="например: github.com" />
         <button onclick="runDns()">Запрос</button>
@@ -206,24 +351,62 @@
 
     <!-- PORT SCAN -->
     <div class="tool-card">
-      <h2>Сканер портов</h2>
-      <p>Проверить стандартные порты: 21, 22, 80, 443, 3306, 5432…</p>
+      <h2>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Сканер портов
+      </h2>
+      <p>Проверить открытые порты на хосте</p>
       <div class="input-row">
         <input type="text" id="port-host" placeholder="например: 1.1.1.1" />
-        <button onclick="runPorts()">Сканировать</button>
+        <button id="port-btn" onclick="runPorts()">Сканировать</button>
       </div>
+
+      <details class="port-opts" id="port-opts">
+        <summary>
+          <span>Порты: <span id="port-count">все (78)</span></span>
+        </summary>
+        <div class="port-opts-body">
+          <div class="port-cats" id="port-cats"></div>
+          <div class="port-quick">
+            <button onclick="selectAllCats(true)">Выбрать все</button>
+            <button onclick="selectAllCats(false)">Снять все</button>
+          </div>
+          <div class="port-custom-row">
+            <span>Свои:</span>
+            <input type="text" id="port-custom" placeholder="8000, 9001, 27018" />
+          </div>
+        </div>
+      </details>
+
       <div class="result" id="port-result"></div>
     </div>
 
     <!-- HTTP HEADERS -->
     <div class="tool-card">
-      <h2>HTTP-заголовки</h2>
-      <p>Просмотреть заголовки ответа любого сайта</p>
+      <h2>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+        HTTP-заголовки
+      </h2>
+      <p>Заголовки ответа любого сайта</p>
       <div class="input-row">
         <input type="text" id="http-url" placeholder="например: https://example.com" />
         <button onclick="runHeaders()">Получить</button>
       </div>
       <div class="result" id="http-result"></div>
+    </div>
+
+    <!-- SSL CERT -->
+    <div class="tool-card">
+      <h2>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        SSL-сертификат
+      </h2>
+      <p>Просмотр HTTPS-сертификата хоста</p>
+      <div class="input-row">
+        <input type="text" id="ssl-host" placeholder="например: github.com" />
+        <button onclick="runSsl()">Проверить</button>
+      </div>
+      <div class="result" id="ssl-result"></div>
     </div>
 
   </div>
@@ -237,7 +420,85 @@
 
 <script>
   const API = '/api';
+  let currentProxy = 'direct';
 
+  // ── Port categories ──────────────────────────────
+  const CATS = {
+    'Web':       [80, 443, 3000, 3001, 4000, 4200, 5000, 5173, 8008, 8080, 8443, 8888, 9000, 9090],
+    'Email':     [25, 110, 143, 465, 587, 993, 995],
+    'SSH/RDP':   [22, 23, 3389, 5900, 5901],
+    'FTP':       [20, 21, 990],
+    'DNS':       [53],
+    'БД':        [1433, 1521, 3306, 5432, 5601, 5984, 6379, 7474, 7687, 9042, 9200, 9300, 11211, 27017],
+    'Сеть':      [111, 135, 137, 138, 139, 161, 162, 179, 389, 445, 636],
+    'VPN/Прокси':[500, 1080, 1194, 1723, 3128, 4500, 8118, 8388],
+    'DevOps':    [2181, 2375, 2376, 2379, 2380, 4369, 5672, 6443, 9092, 9418, 15672],
+    'Прочее':    [79, 113, 119, 514, 515, 631, 873, 2049, 10000, 32400],
+  };
+
+  const catState = {};
+  Object.keys(CATS).forEach(k => catState[k] = true);
+
+  function buildCatChips() {
+    const container = document.getElementById('port-cats');
+    Object.keys(CATS).forEach(cat => {
+      const label = document.createElement('label');
+      label.className = 'cat-chip on';
+      label.dataset.cat = cat;
+      label.innerHTML = `<input type="checkbox" checked onchange="toggleCat('${cat}', this.checked)"> ${cat} <span class="dim">(${CATS[cat].length})</span>`;
+      container.appendChild(label);
+    });
+    updatePortCount();
+  }
+
+  function toggleCat(cat, checked) {
+    catState[cat] = checked;
+    const chip = document.querySelector(`.cat-chip[data-cat="${cat}"]`);
+    chip.classList.toggle('on', checked);
+    updatePortCount();
+  }
+
+  function selectAllCats(on) {
+    Object.keys(CATS).forEach(cat => {
+      catState[cat] = on;
+      const chip = document.querySelector(`.cat-chip[data-cat="${cat}"]`);
+      chip.classList.toggle('on', on);
+      chip.querySelector('input').checked = on;
+    });
+    updatePortCount();
+  }
+
+  function getSelectedPorts() {
+    const set = new Set();
+    Object.entries(catState).forEach(([cat, on]) => {
+      if (on) CATS[cat].forEach(p => set.add(p));
+    });
+    const custom = document.getElementById('port-custom').value;
+    custom.split(/[\s,;]+/).forEach(s => {
+      const n = parseInt(s.trim());
+      if (n > 0 && n <= 65535) set.add(n);
+    });
+    return [...set].sort((a, b) => a - b);
+  }
+
+  function updatePortCount() {
+    const ports = getSelectedPorts();
+    document.getElementById('port-count').textContent =
+      ports.length === 0 ? 'нет' : `${ports.length} шт.`;
+  }
+
+  document.getElementById('port-custom').addEventListener('input', updatePortCount);
+
+  buildCatChips();
+
+  // ── Proxy selector ──────────────────────────────
+  function setProxy(val) {
+    currentProxy = val;
+    document.querySelectorAll('.proxy-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('btn-' + val).classList.add('active');
+  }
+
+  // ── Helpers ──────────────────────────────────────
   function spin(id) {
     const el = document.getElementById(id);
     el.className = 'result visible';
@@ -258,7 +519,7 @@
     const r = await fetch(API + path, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(body),
+      body: JSON.stringify({...body, proxy: currentProxy}),
     });
     if (!r.ok) {
       const e = await r.json().catch(() => ({detail: r.statusText}));
@@ -267,6 +528,7 @@
     return r.json();
   }
 
+  // ── DNS ──────────────────────────────────────────
   async function runDns() {
     const host = document.getElementById('dns-host').value.trim();
     if (!host) return;
@@ -280,24 +542,42 @@
         vals.forEach(v => { out += `  ${esc(v)}\n`; });
       }
       show('dns-result', out || '<span class="err">Записи не найдены</span>');
-    } catch(e) { show('dns-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`); }
+    } catch(e) {
+      show('dns-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`);
+    }
   }
 
+  // ── Ports ─────────────────────────────────────────
   async function runPorts() {
     const host = document.getElementById('port-host').value.trim();
     if (!host) return;
+    const ports = getSelectedPorts();
+    if (!ports.length) {
+      show('port-result', '<span class="err">Нет выбранных портов</span>');
+      return;
+    }
     spin('port-result');
     try {
-      const d = await post('/ports', {host});
-      const lines = d.results.map(r =>
-        r.open
-          ? `<span class="ok">  ОТКРЫТ  ${r.port}</span>`
-          : `<span class="err">  ЗАКРЫТ  ${r.port}</span>`
-      ).join('\n');
-      show('port-result', `<span class="key">${esc(host)}</span>\n` + lines);
-    } catch(e) { show('port-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`); }
+      const d = await post('/ports', {host, ports});
+      const open   = d.results.filter(r => r.open);
+      const closed = d.results.filter(r => !r.open);
+      let out = `<span class="key">${esc(host)}</span>  <span class="dim">(${d.results.length} проверено)</span>\n\n`;
+      if (open.length) {
+        out += `<span class="ok">Открытые порты (${open.length}):</span>\n`;
+        open.forEach(r => { out += `  <span class="ok">  ${r.port}</span>\n`; });
+        if (closed.length) out += '\n';
+      }
+      if (closed.length) {
+        out += `<span class="dim">Закрытые (${closed.length}):</span>\n`;
+        closed.forEach(r => { out += `  <span class="dim">  ${r.port}</span>\n`; });
+      }
+      show('port-result', out);
+    } catch(e) {
+      show('port-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`);
+    }
   }
 
+  // ── Headers ───────────────────────────────────────
   async function runHeaders() {
     const url = document.getElementById('http-url').value.trim();
     if (!url) return;
@@ -309,15 +589,64 @@
         out += `<span class="key">${esc(k)}</span>: ${esc(v)}\n`;
       }
       show('http-result', out);
-    } catch(e) { show('http-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`); }
+    } catch(e) {
+      show('http-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`);
+    }
   }
 
+  // ── SSL ───────────────────────────────────────────
+  async function runSsl() {
+    const host = document.getElementById('ssl-host').value.trim();
+    if (!host) return;
+    spin('ssl-result');
+    try {
+      const d = await post('/ssl', {host, port: 443});
+      const validLabel = d.is_valid
+        ? `<span class="ok">ДЕЙСТВИТЕЛЕН</span>`
+        : `<span class="err">ПРОСРОЧЕН / НЕДЕЙСТВИТЕЛЕН</span>`;
+
+      let out = `<span class="key">${esc(d.host)}:${d.port}</span>  ${validLabel}\n\n`;
+
+      out += `<span class="key">Субъект (CN)</span>: ${esc(d.subject.cn || '—')}\n`;
+      if (d.subject.o) out += `<span class="key">Организация </span>: ${esc(d.subject.o)}\n`;
+      out += `\n<span class="key">Издатель (CN)</span>: ${esc(d.issuer.cn || '—')}\n`;
+      if (d.issuer.o)  out += `<span class="key">Издатель (O) </span>: ${esc(d.issuer.o)}\n`;
+
+      out += `\n<span class="key">Действителен с</span>: ${esc(fmtDate(d.valid_from))}\n`;
+      out += `<span class="key">Действителен по</span>: ${esc(fmtDate(d.valid_to))}\n`;
+
+      if (d.sans.length) {
+        out += `\n<span class="key">SANs (${d.sans.length}):</span>\n`;
+        d.sans.slice(0, 10).forEach(s => { out += `  ${esc(s)}\n`; });
+        if (d.sans.length > 10) out += `  <span class="dim">... и ещё ${d.sans.length - 10}</span>\n`;
+      }
+
+      out += `\n<span class="key">SHA-256</span>: <span class="dim">${esc(d.fingerprint_sha256)}</span>`;
+
+      show('ssl-result', out);
+    } catch(e) {
+      show('ssl-result', `<span class="err">Ошибка: ${esc(e.message)}</span>`);
+    }
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    try {
+      return new Date(iso).toLocaleString('ru-RU', {
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+      });
+    } catch { return iso; }
+  }
+
+  // ── Enter key ─────────────────────────────────────
   document.addEventListener('keydown', e => {
     if (e.key !== 'Enter') return;
     const id = document.activeElement?.id;
-    if (id === 'dns-host') runDns();
-    else if (id === 'port-host') runPorts();
-    else if (id === 'http-url') runHeaders();
+    if (id === 'dns-host')   runDns();
+    else if (id === 'port-host' || id === 'port-custom') runPorts();
+    else if (id === 'http-url')  runHeaders();
+    else if (id === 'ssl-host')  runSsl();
   });
 </script>
 </body>
