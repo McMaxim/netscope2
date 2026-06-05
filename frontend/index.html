@@ -423,7 +423,7 @@
       </h2>
       <p>Просмотр HTTPS-сертификата хоста</p>
       <div class="input-row">
-        <input type="text" id="ssl-host" placeholder="например: github.com" />
+        <input type="text" id="ssl-host" placeholder="github.com или host:8443" />
         <button onclick="runSsl()">Проверить</button>
       </div>
       <div class="result" id="ssl-result"></div>
@@ -638,11 +638,17 @@
 
   // ── SSL ───────────────────────────────────────────
   async function runSsl() {
-    const host = document.getElementById('ssl-host').value.trim();
-    if (!host) return;
+    const raw = document.getElementById('ssl-host').value.trim();
+    if (!raw) return;
+    const lastColon = raw.lastIndexOf(':');
+    let host = raw, port = 443;
+    if (lastColon > 0) {
+      const maybePort = parseInt(raw.slice(lastColon + 1));
+      if (maybePort > 0 && maybePort <= 65535) { host = raw.slice(0, lastColon); port = maybePort; }
+    }
     spin('ssl-result');
     try {
-      const d = await post('/ssl', {host, port: 443});
+      const d = await post('/ssl', {host, port});
       const validLabel = d.is_valid
         ? `<span class="ok">ДЕЙСТВИТЕЛЕН</span>`
         : `<span class="err">ПРОСРОЧЕН</span>`;
