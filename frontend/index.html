@@ -575,8 +575,14 @@
 
   // ── DNS ──────────────────────────────────────────
   async function runDns() {
-    const host = document.getElementById('dns-host').value.trim();
-    if (!host) return;
+    const raw = document.getElementById('dns-host').value.trim();
+    if (!raw) return;
+    let host = raw;
+    const lastColon = raw.lastIndexOf(':');
+    if (lastColon > 0) {
+      const maybePort = parseInt(raw.slice(lastColon + 1));
+      if (maybePort > 0 && maybePort <= 65535) { host = raw.slice(0, lastColon); }
+    }
     spin('dns-result');
     try {
       const d = await post('/dns', {host});
